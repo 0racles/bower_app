@@ -1,0 +1,136 @@
+<!--<!doctype html>
+<html ng-app="BasicChat">
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="apple-touch-icon-precomposed" href="/media/angularjs-chat.png">
+    <!--<link rel="shortcut icon" href="/media/angularjs-chat.png">--
+
+    <title>AngularJS Basic Chat</title>
+
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<!-- includes -->
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= --
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-chat/angular-chat.js"></script>
+
+<script src="names.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+
+
+<!-- for git installed dependencies -->
+
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<!-- configuration -->
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= --
+<script>
+angular.module('chat').constant( 'config', {
+    //
+    // Get your PubNub API Keys in link below phone demo.
+    //
+    "pubnub": {
+        "publish-key"   : "pub-c-bc94bebc-46fa-488f-b23e-f65172f56177",
+        "subscribe-key" : "sub-c-240204bc-24da-11e6-b700-0619f8945a4f"
+    }
+} );
+</script>
+
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<!-- controller -->
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= --
+<script>
+var chat = angular.module( 'BasicChat', ['chat'] );
+chat.controller( 'chat', [ 'Messages', '$scope',
+function( Messages, $scope ) {
+    // Message Inbox
+    $scope.messages = [];
+
+    // Receive Messages
+    Messages.receive(function(message){
+        $scope.messages.push(message);
+    });
+
+    // Send Messages
+    $scope.send = function() {
+        Messages.send({ data : $scope.textbox });
+    };
+} ] );
+</script>
+
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<!-- view -->
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= --
+<div ng-app="BasicChat">
+    <div ng-controller="chat">
+        <div ng-repeat="message in messages">
+            {{ message.user.name }}:
+            {{ message.data }}
+        </div>
+        <form ng-submit="send()">
+            <input ng-model="textbox">
+        </form>
+    </div>
+</div>
+</body>
+</html> -->
+<!doctype html>
+<html ng-app="BasicChat">
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="apple-touch-icon-precomposed" href="/media/angularjs-chat.png">
+    <!--<link rel="shortcut icon" href="/media/angularjs-chat.png">-->
+
+    <title>watchMYback</title>
+
+     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-chat/angular-chat.js"></script>
+    <script src="names.js"></script>
+    <script src="app.js"></script>
+    
+</head>
+<body>
+
+    <div class="chat-container" ng-controller="BasicController as chat">
+
+        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+        <!-- Chat Messages -->
+        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+        <div class="chat-messages">
+            <div class="chat-header">
+                <div class="angularjs-chat-logo"></div>
+                WATCHmyBack Chat
+            </div>
+            <div ng-repeat="message in chat.messages">
+                <div class="sent-message-{{ message.self }}">
+                    <span class="username">{{ message.user.name }}:</span>
+                    {{ message.data }}
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+        <!-- User Input -->
+        <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+        <form ng-submit="chat.send()" class="chat-input">
+            <input type="text" ng-model="chat.textbox" autofocus>
+            <input type="submit" class="send-icon" value=" ">
+            <input type="submit" value=" "
+                class="sent-indicator {{ chat.status }}">
+        </form>
+
+    </div>
+
+</body>
+</html>
